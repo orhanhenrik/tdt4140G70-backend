@@ -10,6 +10,7 @@ git clone git@github.com:orhanhenrik/tdt4140G70-backend.git
 cd tdt4140G70-backend
 python3 -m venv venv
 source venv/bin/activate
+pip install -r requirements.txt
 python manage.py migrate
 python manage.py runserver
 ```
