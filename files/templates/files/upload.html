@@ -1,0 +1,14 @@
+<h1>Upload</h1>
+<form action="{% url 'upload' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <p>{{ form.non_field_errors }}</p>
+    <p>{{ form.file.label_tag }} {{ form.file.help_text }}</p>
+    <p>
+        {{ form.file.errors }}
+        {{ form.file }}
+    </p>
+    <p>
+        {{ form.course_id }}
+    </p>
+    <p><input type="submit" value="Upload" /></p>
+</form>
