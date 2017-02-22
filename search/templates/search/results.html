@@ -1,0 +1,14 @@
+{% extends 'general/base.html' %}
+
+{% block content %}
+    <h1>Search results</h1>
+
+    <form method="GET">
+        <input type="text" name="query" placeholder="search"/>
+        <input type="submit" value="Søk" />
+    </form>
+
+    {% if results %}
+        hello
+    {% endif %}
+{% endblock content %}
