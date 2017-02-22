@@ -1,0 +1,34 @@
+PUT _ingest/pipeline/attachment
+{
+    "description" : "Extract attachment information",
+    "processors" : [
+      {
+        "attachment" : {
+        "field" : "data",
+        "indexed_chars" : -1
+        }
+      }
+    ]
+}
+
+PUT my_index/my_type/my_id?pipeline=attachment
+{
+   "filename" : "lorem-ipsum.pdf",
+   "title" : "Lorem ipsum",
+   "data": "e1xydGYxXGFuc2kNCkxvcmVtIGlwc3VtIGRvbG9yIHNpdCBhbWV0DQpccGFyIH0="
+
+}
+
+POST /my_index/my_type/_search
+{
+    "_source": {
+       "excludes": [ "data" ]
+    },
+   "query": {
+      "match": {
+         "attachment.content": {
+            "query": "dolor"
+         }
+      }
+   }
+}

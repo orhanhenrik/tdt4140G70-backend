@@ -5,6 +5,10 @@
 ## Install [ingest-plugin](https://www.elastic.co/guide/en/elasticsearch/plugins/current/ingest-attachment.html)
 * Run `/usr/share/elasticsearch/bin/elasticsearch-plugin install ingest-attachment`
 
+## Install [Kibana](https://www.elastic.co/guide/en/kibana/current/deb.html)
+A web interface for creating and sending queries.
+After installation you can find it at [http://127.0.0.1:5601](http://127.0.0.1:5601)
+
 # Configure elasticsearch
 
 ## Inside `/etc/elasticsearch/jvm.options`
