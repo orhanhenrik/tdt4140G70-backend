@@ -3,5 +3,5 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
-    url(r'^$', views.get_courses, name='index')
+    url(r'^$', views.current_datetime, name='index'),
 ]
