@@ -1,10 +1,7 @@
-from django import forms
+from django.forms import ModelForm
+from files.models import File
 
-
-class DocumentForm(forms.Form):
-    file = forms.FileField(
-        label='Select a file'
-    )
-    course_id = forms.IntegerField(
-        label='Course id'
-    )
+class FileForm(ModelForm):
+    class Meta:
+        model = File
+        fields = ['file', 'course']

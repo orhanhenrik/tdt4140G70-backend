@@ -4,7 +4,7 @@ from django.shortcuts import render
 # Create your views here.
 from django.urls import reverse
 
-from files.forms import DocumentForm
+from files.forms import FileForm
 from files.models import File
 
 
@@ -18,13 +18,12 @@ def list(request):
 
 def upload(request):
     if request.method == 'POST':
-        form = DocumentForm(request.POST, request.FILES)
+        form = FileForm(request.POST, request.FILES)
         if form.is_valid():
-            file = File(file=request.FILES['file'], course_id=request.POST['course_id'])
-            file.save()
-        return HttpResponseRedirect(reverse('list-files'))
+            form.save()
+            return HttpResponseRedirect(reverse('list-files'))
     else:
-        form = DocumentForm()
+        form = FileForm()
 
     return render(
         request,

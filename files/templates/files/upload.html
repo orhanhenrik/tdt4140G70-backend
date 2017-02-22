@@ -1,14 +1,11 @@
-<h1>Upload</h1>
-<form action="{% url 'upload' %}" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    <p>{{ form.non_field_errors }}</p>
-    <p>{{ form.file.label_tag }} {{ form.file.help_text }}</p>
-    <p>
-        {{ form.file.errors }}
-        {{ form.file }}
-    </p>
-    <p>
-        {{ form.course_id }}
-    </p>
-    <p><input type="submit" value="Upload" /></p>
-</form>
+{% extends 'general/base.html' %}
+
+{% block content %}
+    <h1>Upload file</h1>
+    <a href="{% url 'list-files' %}">Back</a>
+    <form method="POST" class="post-form" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="save btn btn-primary">Save</button>
+    </form>
+{% endblock %}

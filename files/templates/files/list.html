@@ -1,7 +1,11 @@
-<h1>List files</h1>
-<a href="{% url 'upload' %}">UPLOAD</a>
-<ul>
-{% for file in files %}
-    <li><a href="{{ file.file.url }}">{{ file.id }} - {{ file.file.name }} </a></li>
-{% endfor %}
-</ul>
+{% extends 'general/base.html' %}
+
+{% block content %}
+    <h1>List files</h1>
+    <a href="{% url 'upload' %}">UPLOAD</a>
+    <ul>
+    {% for file in files %}
+        <li><a href="{{ file.file.url }}">{{ file.id }} - {{ file.file.name }} </a></li>
+    {% endfor %}
+    </ul>
+{% endblock content %}
