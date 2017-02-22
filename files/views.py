@@ -21,7 +21,7 @@ def upload(request):
         form = FileForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('list-files'))
+            return HttpResponseRedirect(reverse('file-list'))
     else:
         form = FileForm()
 

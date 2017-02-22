@@ -8,6 +8,17 @@
 
     </head>
     <body>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="{% url 'course-list' %}">ItsCrawling</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    <li><a href="{% url 'course-list' %}">Courses</a></li>
+                    <li><a href="{% url 'file-list' %}">Files</a></li>
+                </ul>
+            </div>
+        </nav>
         <div class="content container">
             <div class="row">
                 <div class="col-md-8">

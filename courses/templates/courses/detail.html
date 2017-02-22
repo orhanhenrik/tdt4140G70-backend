@@ -1,0 +1,8 @@
+{% extends 'general/base.html' %}
+
+{% block content %}
+    <a href="{% url 'course-list' %}">Back</a><br/>
+    <a href="{% url 'course-edit' object.id %}">Edit</a>
+    <h1>{{ object.name }}</h1>
+    <p>{{ object.description }}</p>
+{% endblock %}

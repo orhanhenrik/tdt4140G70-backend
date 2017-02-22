@@ -1,9 +1,9 @@
 {% extends 'general/base.html' %}
 
 {% block content %}
-    <h1>Upload file</h1>
-    <a href="{% url 'file-list' %}">Back</a>
-    <form method="POST" class="post-form" enctype="multipart/form-data">
+    <h1>Edit course</h1>
+    <a href="{% url 'course-list' %}">Back</a>
+    <form method="POST" class="post-form">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="save btn btn-primary">Save</button>
