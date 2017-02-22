@@ -5,4 +5,10 @@
     <a href="{% url 'course-edit' object.id %}">Edit</a>
     <h1>{{ object.name }}</h1>
     <p>{{ object.description }}</p>
+    <h3>Files:</h3>
+    <ul>
+    {% for file in object.files.all %}
+        <li><a href="{{ file.file.url }}">{{ file.id }} - {{ file.name }}</a></li>
+    {% endfor %}
+    </ul>
 {% endblock %}

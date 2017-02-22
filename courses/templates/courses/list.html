@@ -5,7 +5,7 @@
     <a href="{% url 'course-create' %}">Create course</a>
     <ul>
     {% for course in object_list %}
-        <li> <a href="{% url 'course-detail' course.id %}">{{ course.id }} - {{ course.name }}</a></li>
+        <li> <a href="{% url 'course-detail' course.id %}">{{ course.id }} - {{ course.name }} ({{ course.files.count }} files)</a></li>
     {% endfor %}
     </ul>
 {% endblock content %}
