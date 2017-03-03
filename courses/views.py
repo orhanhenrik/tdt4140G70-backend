@@ -10,11 +10,6 @@ from django.views.generic import UpdateView
 from courses.models import Course
 
 
-def list(request):
-    courses = Course.objects.all()
-    return render(request, 'courses/list.html', {
-        'courses': courses,
-    })
 class Courses(ListView):
     queryset = Course.objects.all()
     template_name = 'courses/list.html'
