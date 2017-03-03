@@ -2,10 +2,29 @@
 
 {% block content %}
     <h1>List files</h1>
-    <a href="{% url 'file-upload' %}">UPLOAD</a>
-    <ul>
-    {% for file in object_list %}
-        <li><a href="{{ file.file.url }}">{{ file.id }} - {{ file.name }} </a></li>
-    {% endfor %}
-    </ul>
+
+    <form method="get">
+        <select name="filetype_choice">
+            <option></option> <!-- all types -->
+            {% for type in file_types_list %}
+                <option>{{ type }}</option>
+            {% endfor %}
+        </select>
+    </form>
+
+    <table>
+        <th colspan="2">
+            <a href="{% url 'file-upload' %}">UPLOAD</a>
+        </th>
+        {% for file in object_list %}
+            <tr>
+                <td width="50%" align="center">
+                    <input type="checkbox" id="{{ file.id }}"/>
+                </td>
+                <td width="50%">
+                    <a href="{{ file.file.url }}">{{ file.name }}</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
 {% endblock content %}
