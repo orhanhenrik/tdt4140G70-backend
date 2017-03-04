@@ -17,3 +17,11 @@ After installation you can find it at [http://127.0.0.1:5601](http://127.0.0.1:5
 
 ## Inside `/etc/elasticsearch/elasticsearch.yml`
 * Set `network.host: 127.0.0.1`, so that only our server can access elastic
+
+## Development
+Use the following Dockerfile and run `docker build -t elastic-ingest:5.2.2 .` to build it.
+```
+FROM docker.elastic.co/elasticsearch/elasticsearch:5.2.2
+RUN bin/elasticsearch-plugin install ingest-attachment
+```
+Run `docker run -p 9200:9200 -e "http.host=0.0.0.0" -e "transport.host=127.0.0.1" elastic-ingest:5.2.2` to start the elasticsearch server.
