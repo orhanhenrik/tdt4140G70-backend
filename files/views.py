@@ -3,30 +3,20 @@ from django.shortcuts import render
 
 # Create your views here.
 from django.urls import reverse
+from django.views.generic import CreateView
+from django.views.generic import ListView
 
-from files.forms import FileForm
 from files.models import File
 
 
-def list(request):
-    files = File.objects.all()
-    return render(
-        request,
-        'files/list.html',
-        {'files': files}
-    )
+class FileList(ListView):
+    queryset = File.objects.all()
+    template_name = 'files/list.html'
 
-def upload(request):
-    if request.method == 'POST':
-        form = FileForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse('list-files'))
-    else:
-        form = FileForm()
 
-    return render(
-        request,
-        'files/upload.html',
-        {'form': form}
-    )
+class FileUpload(CreateView):
+    model = File
+    fields = ['file', 'name', 'course']
+    template_name = 'files/upload.html'
+    def get_success_url(self):
+        return reverse('file-list')
