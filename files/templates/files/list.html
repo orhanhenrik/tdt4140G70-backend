@@ -4,10 +4,10 @@
     <h1>List files</h1>
 
     <form method="get">
-        <select name="filetype_choice">
-            <option></option> <!-- all types -->
+        <select name="filetype_choice" onchange="this.form.submit()">
+            <option>All</option> <!-- all types -->
             {% for type in file_types_list %}
-                <option>{{ type }}</option>
+                <option value="{{ type }}" {% if type == filetype %} selected="true" {% endif %}>{{ type }}</option>
             {% endfor %}
         </select>
     </form>
