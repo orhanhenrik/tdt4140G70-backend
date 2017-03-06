@@ -35,9 +35,15 @@ class FileList(ListView):
 
 
 class FileUpload(CreateView):
+    dialog_count = 1
     model = File
     fields = ['file', 'name', 'course']
     template_name = 'files/upload.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(FileUpload, self).get_context_data(**kwargs)
+        context["range"] = range(self.dialog_count)
+        return context
 
     def get_success_url(self):
         return reverse('file-list')
