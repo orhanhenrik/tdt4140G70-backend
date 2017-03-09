@@ -1,5 +1,6 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
+from .forms import CommentForm
 
 # Create your views here.
 from django.urls import reverse
@@ -45,9 +46,11 @@ class FileUpload(CreateView):
 class CreateComment(CreateView):
     model = CreateComment
     fields = ['author', 'text']
-    template_name = 'files/add-comment'
-    return render(request, 'blog/add_comment_to_post.html', {'form': form})
+    #template_name = 'files/add-comment'
+    #render(request, 'files/add_comment_to_file.html', {'form': form})
 
+"""
+# Utgangspunkt
 def add_comment_to_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.method == "POST":
@@ -59,4 +62,5 @@ def add_comment_to_post(request, pk):
             return redirect('post_detail', pk=post.pk)
     else:
         form = CommentForm()
-    return render(request, 'blog/add_comment_to_post.html', {'form': form})
+    return render(request, 'files/add_comment_to_file.html', {'form': form})
+"""
