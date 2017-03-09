@@ -44,7 +44,7 @@ class FileUpload(CreateView):
         return reverse('file-list')
 
 class CreateComment(CreateView):
-    model = CreateComment
+    model = CommentForm
     fields = ['author', 'text']
     #template_name = 'files/add-comment'
     #render(request, 'files/add_comment_to_file.html', {'form': form})
