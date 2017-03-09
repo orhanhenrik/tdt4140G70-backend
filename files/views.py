@@ -1,4 +1,8 @@
 from django.http import Http404
+from django.http import HttpResponseRedirect
+from django.shortcuts import render
+from .forms import CommentForm
+
 from django.urls import reverse
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
