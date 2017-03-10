@@ -44,15 +44,24 @@ class Elasticsearch:
                     'includes': ['filename']
                 },
                 'query': {
-                    'match': {
-                        'attachment.content': {
-                            'query': query,
-                            'fuzziness': 'AUTO'
+                    'multi_match': {
+                        'query': query,
+                        'fuzziness': 'AUTO',
+                        'fields': ['attachment.content', '_source.filename']
+                    }
+                },
+                "highlight": {
+                    "pre_tags": ["<b>"],
+                    "post_tags": ["</b>"],
+                    "fields": {
+                        "attachment.content": {
+                            "fragment_size": 150,
+                            "number_of_fragments": 3
                         }
                     }
                 }
             })
         )
-        print(r.text, r.status_code)
+        return json.loads(r.text)
 
 elasticsearch = Elasticsearch()
