@@ -1,7 +1,7 @@
 {% extends 'general/base.html' %}
 
 {% block content %}
-    <h1>Add your comment</h1>
+    <h1>Add comment</h1>
     <form method="POST" class="post-form">{% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="save btn btn-default">Submit</button>
