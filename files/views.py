@@ -1,11 +1,9 @@
-<<<<<<< HEAD
-from django.http import Http404
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from .forms import CommentForm
 
-=======
->>>>>>> Fixes
+
+from django.http import Http404
 from django.urls import reverse
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
@@ -13,13 +11,11 @@ from django.views.generic import ListView
 from django.http import HttpResponse
 from files.models import File, Comment
 
-<<<<<<< HEAD
+
 from io import BytesIO
 import zipfile
 import os
-=======
-from files.models import File, Comment
->>>>>>> Fixes
+
 
 
 class FileList(ListView):

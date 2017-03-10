@@ -12,6 +12,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 from search.elasticsearch import elasticsearch
+from django.utils.timezone import now
 
 
 class File(models.Model):
