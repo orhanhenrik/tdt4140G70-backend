@@ -1,13 +1,8 @@
-from django.http import HttpResponseRedirect
-from django.shortcuts import render
-from .forms import CommentForm
-
-# Create your views here.
 from django.urls import reverse
 from django.views.generic import CreateView
 from django.views.generic import ListView
 
-from files.models import File
+from files.models import File, Comment
 
 
 class FileList(ListView):
@@ -44,23 +39,7 @@ class FileUpload(CreateView):
         return reverse('file-list')
 
 class CreateComment(CreateView):
-    model = CommentForm
+    model = Comment
     fields = ['author', 'text']
-    #template_name = 'files/add-comment'
-    #render(request, 'files/add_comment_to_file.html', {'form': form})
+    template_name = 'files/add_comment_to_file.html'
 
-"""
-# Utgangspunkt
-def add_comment_to_post(request, pk):
-    post = get_object_or_404(Post, pk=pk)
-    if request.method == "POST":
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.post = post
-            comment.save()
-            return redirect('post_detail', pk=post.pk)
-    else:
-        form = CommentForm()
-    return render(request, 'files/add_comment_to_file.html', {'form': form})
-"""
