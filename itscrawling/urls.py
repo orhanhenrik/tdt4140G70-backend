@@ -21,5 +21,7 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^courses/', include('courses.urls')),
-    url(r'^files/', include('files.urls'))
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    url(r'^home/', include('home.urls')),
+    url(r'^files/', include('files.urls')),
+    static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]

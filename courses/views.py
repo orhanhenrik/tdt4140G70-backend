@@ -7,6 +7,12 @@ from django.views.generic import DetailView
 from django.views.generic import ListView
 from django.views.generic import UpdateView
 
+<<<<<<< HEAD
+def get_courses(request):
+    return render(request, 'courses/list_courses.html', {
+        'message': "hi!",
+    })
+=======
 from courses.models import Course
 
 
@@ -31,3 +37,4 @@ class UpdateCourse(UpdateView):
     template_name = 'courses/edit.html'
     def get_success_url(self):
         return reverse('course-detail', args=(self.object.id,))
+>>>>>>> f6927449efce2520868014555fe8916357e77bb2
