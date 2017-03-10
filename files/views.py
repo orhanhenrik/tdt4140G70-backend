@@ -5,13 +5,15 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.views.generic import CreateView
 from django.views.generic import ListView
-
+from django.http.response import HttpResponse
 from files.models import File
 
 
 class FileList(ListView):
+    # permission_classes = (permissions.AllowAny,)
     queryset = File.objects.all()
     template_name = 'files/list.html'
+    checked_files_ids = list()
 
     def get_context_data(self, **kwargs):
         context = super(FileList, self).get_context_data(**kwargs)
@@ -19,10 +21,12 @@ class FileList(ListView):
         all_types = set()
         for file in all_files:
             name = file.filename()
-            type = name[(name.index('.')+1):]
+            type = name[(name.index('.') + 1):]
             all_types.add(type)
         context["filetype"] = self.request.GET.get("filetype_choice")
         context["file_types_list"] = all_types
+
+        self.checked_files_ids = self.request.GET.getlist('checks[]')
         return context
 
     def get_queryset(self):
@@ -32,6 +36,9 @@ class FileList(ListView):
         else:
             queryset = File.objects.all().filter(file__endswith=filetype)
         return queryset
+
+    # def post(self, request, format=None):
+    #     return HttpResponse("ok")
 
 
 class FileUpload(CreateView):
