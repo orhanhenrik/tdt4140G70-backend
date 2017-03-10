@@ -127,3 +127,5 @@ STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+ES_URL = 'http://127.0.0.1:9200/'
