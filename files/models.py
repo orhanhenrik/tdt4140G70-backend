@@ -7,6 +7,7 @@ from django.db import models
 import os
 
 # Create your models here.
+from django.utils.timezone import now
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
@@ -18,6 +19,14 @@ class File(models.Model):
 
     def filename(self):
         return os.path.basename(self.file.name)
+
+class Comment(models.Model):
+    file = models.ForeignKey('files.File', related_name='comments')
+    text = models.TextField()
+    created_at = models.DateTimeField(default=now, null=False)
+
+    def __str__(self):
+        return self.text
 
 @receiver(post_save, sender=File)
 def post_save_file(sender, instance, **kwargs):

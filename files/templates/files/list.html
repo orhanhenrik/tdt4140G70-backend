@@ -21,8 +21,11 @@
                 <td width="50%" align="center">
                     <input type="checkbox" id="{{ file.id }}"/>
                 </td>
-                <td width="50%">
+                <td width="25%">
                     <a href="{{ file.file.url }}">{{ file.name }}</a>
+                </td>
+                <td width="25%">
+                    <a href="{% url 'comment' file.pk %}">{{ file.comments.count }} comments</a>
                 </td>
             </tr>
         {% endfor %}
