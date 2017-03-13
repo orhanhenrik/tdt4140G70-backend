@@ -20,3 +20,7 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.text
+
+class FileDownloadLog(models.Model):
+    file = models.ForeignKey('files.File', related_name = 'downloads')
+    timestamp = models.DateTimeField(default = now, null = False)
