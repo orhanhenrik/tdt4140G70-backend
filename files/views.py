@@ -8,7 +8,6 @@ from django.views.generic import ListView
 from django.http import HttpResponse
 from files.models import File
 
-from io import StringIO
 from io import BytesIO
 import zipfile
 import os
@@ -46,9 +45,7 @@ class FileList(ListView):
 
         if self.checked_files_ids:
 
-            checked_files = list()
-            for file_id in self.checked_files_ids:
-                checked_files.append(File.objects.get(id=file_id))
+            checked_files = File.objects.filter(id__in=self.checked_files_ids).all()
 
             checked_filenames = list()
             for file in checked_files:
@@ -67,15 +64,13 @@ class FileList(ListView):
                 # Calculate path for file in zip
                 fdir, fname = os.path.split(fpath)
                 zip_path = os.path.join(zip_subdir, fname)
-
-                # print(zip_path, zip_subdir, fpath)
                 # Add file, at correct path
                 zf.write(fpath, zip_path)
 
             # Must close zip for all contents to be written
             zf.close()
 
-            # Grab ZIP file from in-memory, make response with correct MIME-type
+            # Grab ZIP file from in-memory, make response
             resp = HttpResponse(s.getvalue())
             # ..and correct content-disposition
             resp['Content-Disposition'] = 'attachment; filename=%s' % zip_filename
@@ -86,15 +81,9 @@ class FileList(ListView):
 
 
 class FileUpload(CreateView):
-    dialog_count = 1
     model = File
     fields = ['file', 'name', 'course']
     template_name = 'files/upload.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(FileUpload, self).get_context_data(**kwargs)
-        context["range"] = range(self.dialog_count)
-        return context
 
     def get_success_url(self):
         return reverse('file-list')

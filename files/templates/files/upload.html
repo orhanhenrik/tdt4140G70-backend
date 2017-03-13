@@ -3,17 +3,10 @@
 {% block content %}
     <h1>Upload file</h1>
     <a href="{% url 'file-list' %}">Back</a>
-
-    {% for index in range %}
-        <form method="POST" class="post-form" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="save btn btn-primary">Save</button>
-        </form>
-    {% endfor %}
-    <!-- This button should increment dialog_count when pressed. Not implemented yet -->
-    <form method="get">
-        <button name="upload_more_btn" onchange="this.form.submit()">Upload more</button>
+    <form method="POST" class="post-form" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="save btn btn-primary">Save</button>
     </form>
 
 {% endblock %}
