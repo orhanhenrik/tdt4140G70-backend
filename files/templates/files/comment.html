@@ -1,0 +1,20 @@
+{% extends 'general/base.html' %}
+
+{% block content %}
+    File:<br/>
+    {{ file.id }} - {{ file.name }}<br/>
+    {{ file.downloads.count }}
+    <h1>Add comment</h1>
+    <form method="POST" class="post-form">{% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="save btn btn-default">Submit</button>
+    </form>
+
+    <h3> Comments on {{ file.name }}</h3>
+    <a href="{% url 'file-list' %}">Back</a>
+    <div>
+        {% for comment in file.comments.all %}
+            <span><i>{{ comment.created_at }}</i> <b>{{ comment.text }}</b></span><br/>
+        {% endfor %}
+    </div>
+{% endblock %}
