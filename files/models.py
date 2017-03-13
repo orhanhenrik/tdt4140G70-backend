@@ -9,3 +9,4 @@ class File(models.Model):
 
     def filename(self):
         return os.path.basename(self.file.name)
+
