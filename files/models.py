@@ -20,6 +20,7 @@ class File(models.Model):
     def filename(self):
         return os.path.basename(self.file.name)
 
+
 class Comment(models.Model):
     file = models.ForeignKey('files.File', related_name='comments')
     text = models.TextField()
