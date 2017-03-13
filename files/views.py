@@ -6,9 +6,11 @@ from django.views.generic import ListView
 from django.http import HttpResponse
 from files.models import File, Comment
 
+
 from io import BytesIO
 import zipfile
 import os
+
 
 
 class FileList(ListView):
@@ -38,7 +40,7 @@ class FileList(ListView):
             queryset = File.objects.all().filter(file__endswith=filetype)
         return queryset
 
-    def get(self, request, format=None):
+    def get(self, request, *args, **kwargs):
         self.checked_files_ids = self.request.GET.getlist('checks[]')
 
         if self.checked_files_ids:
@@ -75,7 +77,7 @@ class FileList(ListView):
 
             return resp
 
-        return super(FileList, self).get(request, format)
+        return super(FileList, self).get(request, *args, **kwargs)
 
 
 class FileUpload(CreateView):
