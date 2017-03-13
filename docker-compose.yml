@@ -1,0 +1,7 @@
+version: '2'
+
+services:
+  elasticsearch:
+    image: 'ragnarok56/elasticsearch-ingest-attachment'
+    ports:
+     - '127.0.0.1:9200:9200'
