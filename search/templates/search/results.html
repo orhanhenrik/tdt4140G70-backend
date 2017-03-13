@@ -4,11 +4,13 @@
     <h1>Search results</h1>
 
     <form method="GET">
-        <input type="text" name="query" placeholder="search"/>
+        <input type="text" name="query" placeholder="search"
+                {% if query %} value="{{ query }}" {% endif %}
+        />
         <input type="submit" value="Søk" />
     </form>
     {% if error %}
-        Error {{ error }}
+        Error! <br/>{{ error }}
     {% endif %}
     {% if results %}
         search took {{ duration }} ms<br/>

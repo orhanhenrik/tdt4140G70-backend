@@ -1,8 +1,3 @@
-from django.http import HttpResponseRedirect
-from django.shortcuts import render
-from .forms import CommentForm
-
-
 from django.http import Http404
 from django.urls import reverse
 from django.urls import reverse_lazy
@@ -45,7 +40,7 @@ class FileList(ListView):
             queryset = File.objects.all().filter(file__endswith=filetype)
         return queryset
 
-    def get(self, request, format=None):
+    def get(self, request, *args, **kwargs):
         self.checked_files_ids = self.request.GET.getlist('checks[]')
 
         if self.checked_files_ids:
@@ -82,7 +77,7 @@ class FileList(ListView):
 
             return resp
 
-        return super(FileList, self).get(request, format)
+        return super(FileList, self).get(request, *args, **kwargs)
 
 
 class FileUpload(CreateView):

@@ -24,6 +24,6 @@ urlpatterns = [
     url(r'^courses/', include('courses.urls')),
     url(r'^login/$', auth_views.login, {'template_name': 'general/login.html'}, name='login'),
     url(r'^logout/$', auth_views.logout, name='logout'),
-    url(r'^files/', include('files.urls'))
+    url(r'^files/', include('files.urls')),
     url(r'^search/', include('search.urls'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
