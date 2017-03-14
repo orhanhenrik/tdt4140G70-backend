@@ -19,7 +19,7 @@ class ViewCourse(LoginRequiredMixin, DetailView):
     template_name = 'courses/detail.html'
 
 class CreateCourse(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
-    permission_required = 'course.can_create'
+    permission_required = 'courses.add_course'
     model = Course
     fields = ['name', 'description']
     template_name = 'courses/new.html'
@@ -27,7 +27,7 @@ class CreateCourse(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
         return reverse('course-detail', args=(self.object.id,))
 
 class UpdateCourse(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
-    permission_required = 'course.can_update'
+    permission_required = 'courses.change_course'
     model = Course
     fields = ['name', 'description']
     template_name = 'courses/edit.html'

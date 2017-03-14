@@ -15,7 +15,7 @@
     <form method="get" action="">
         <table>
 
-          {% if perms.files.can_create %}
+          {% if perms.files.add_file %}
             <th colspan="2">
                 <a href="{% url 'file-upload' %}">UPLOAD</a>
             </th>

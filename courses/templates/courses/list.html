@@ -2,7 +2,7 @@
 
 {% block content %}
     <h1>List courses</h1>
-    {% if perms.course.can_create %}
+    {% if perms.courses.add_course %}
       <a href="{% url 'course-create' %}">Create course</a>
     {% endif %}
     <ul>

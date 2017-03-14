@@ -82,7 +82,7 @@ class FileList(LoginRequiredMixin, ListView):
 
 
 class FileUpload(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
-    permission_required = 'files.can_create'
+    permission_required = 'files.add_file'
     model = File
     fields = ['file', 'name', 'course']
     template_name = 'files/upload.html'

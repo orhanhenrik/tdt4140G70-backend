@@ -2,7 +2,9 @@
 
 {% block content %}
     <a href="{% url 'course-list' %}">Back</a><br/>
+  {% if perms.courses.change_course %}
     <a href="{% url 'course-edit' object.id %}">Edit</a>
+  {% endif %}
     <h1>{{ object.name }}</h1>
     <p>{{ object.description }}</p>
     <h3>Files:</h3>
