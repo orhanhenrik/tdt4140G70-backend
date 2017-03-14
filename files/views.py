@@ -1,3 +1,5 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.http import Http404
 from django.urls import reverse
 from django.urls import reverse_lazy
@@ -12,8 +14,7 @@ import zipfile
 import os
 
 
-
-class FileList(ListView):
+class FileList(LoginRequiredMixin, ListView):
     # permission_classes = (permissions.AllowAny,)
     queryset = File.objects.all()
     template_name = 'files/list.html'
@@ -80,14 +81,15 @@ class FileList(ListView):
         return super(FileList, self).get(request, *args, **kwargs)
 
 
-class FileUpload(CreateView):
+class FileUpload(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
+    permission_required = 'files.can_create'
     model = File
     fields = ['file', 'name', 'course']
     template_name = 'files/upload.html'
 
     success_url = reverse_lazy('file-list')
 
-class CommentView(CreateView):
+class CommentView(LoginRequiredMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super(CommentView, self).get_context_data(**kwargs)
         try:

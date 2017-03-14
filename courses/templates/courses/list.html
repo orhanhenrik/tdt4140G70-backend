@@ -2,7 +2,9 @@
 
 {% block content %}
     <h1>List courses</h1>
-    <a href="{% url 'course-create' %}">Create course</a>
+    {% if perms.course.can_create %}
+      <a href="{% url 'course-create' %}">Create course</a>
+    {% endif %}
     <ul>
     {% for course in object_list %}
         <li> <a href="{% url 'course-detail' course.id %}">{{ course.id }} - {{ course.name }} ({{ course.files.count }} files)</a></li>

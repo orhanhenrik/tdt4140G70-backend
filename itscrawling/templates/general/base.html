@@ -17,7 +17,7 @@
                     <li><a href="{% url 'course-list' %}">Courses</a></li>
                     <li><a href="{% url 'file-list' %}">Files</a></li>
                     {% if user.is_authenticated %}
-                      <li><a href="{% url 'account_logout' %}">Logout</a></li>
+                    <li><a href="{% url 'account_logout' %}">Logout {{ user.get_username }}</a></li>
                     {% else %}
                       <li><a href="{% url 'account_login' %}">Login</a></li>
                     {% endif %}

@@ -14,9 +14,12 @@
 
     <form method="get" action="">
         <table>
+
+          {% if perms.files.can_create %}
             <th colspan="2">
                 <a href="{% url 'file-upload' %}">UPLOAD</a>
             </th>
+          {% endif %}
             {% for file in object_list %}
                 <tr>
                     <td width="50%" align="center">
