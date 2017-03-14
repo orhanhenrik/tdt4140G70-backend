@@ -132,6 +132,7 @@ MEDIA_URL = '/media/'
 
 
 LOGIN_REDIRECT_URL = '/courses/'
+LOGOUT_REDIRECT_URL = '/courses/'
 
 ES_URL = 'http://127.0.0.1:9200/'
 

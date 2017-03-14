@@ -22,7 +22,8 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^courses/', include('courses.urls')),
-    url(r'^login/$', auth_views.login, {'template_name': 'general/login.html'}, name='login'),
+    url(r'^login/$', auth_views.login, name='login',
+        kwargs={'redirect_authenticated_user': True, 'template_name': 'general/login.html'}),
     url(r'^logout/$', auth_views.logout, name='logout'),
     url(r'^files/', include('files.urls')),
     url(r'^search/', include('search.urls'))
