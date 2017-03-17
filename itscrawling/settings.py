@@ -44,7 +44,8 @@ INSTALLED_APPS = [
 
     'courses',
     'files',
-    'search'
+    'search',
+    'home'
 ]
 
 AUTHENTICATION_BACKENDS = (

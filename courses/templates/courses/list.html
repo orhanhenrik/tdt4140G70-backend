@@ -7,7 +7,15 @@
     {% endif %}
     <ul>
     {% for course in object_list %}
-        <li> <a href="{% url 'course-detail' course.id %}">{{ course.id }} - {{ course.name }} ({{ course.files.count }} files)</a></li>
+        <li>
+        <td width="50%" align="center">
+            <input type="checkbox" name="checks[]" value="{{ file.id }}"/>
+        </td>
+            <td>
+            <a href="{% url 'course-detail' course.id %}"> {{ course.name }} ({{ course.files.count }} files)</a>
+        </td>
+        </li>
     {% endfor %}
     </ul>
+    <input type="submit" value="Subscribe"/>
 {% endblock content %}
