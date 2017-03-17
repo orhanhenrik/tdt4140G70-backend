@@ -25,5 +25,5 @@ Password: changeme
 
 # Using elasticsearch
 ## Upload PDF
-Run `./fileToJSON.sh My_PDF_File.pdf` followed by 
+Run `./fileToJSON.sh My_PDF_File.pdf` followed by
 `curl "http://elastic:changeme@127.0.0.1:9200/my_index/my_type/<<SOME_NUMBER>>?pipeline=attachment" -d @My_PDF_File.pdf.json`

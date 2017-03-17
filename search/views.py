@@ -1,11 +1,13 @@
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 
-# Create your views here.
+
 from files.models import File
 from search.elasticsearch import elasticsearch
 from search.models import SearchLog
 
 
+@login_required
 def search(request):
     query = request.GET.get('query')
     if query:
