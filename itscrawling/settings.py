@@ -42,8 +42,6 @@ INSTALLED_APPS = [
     # Login stuff
     'allauth',
     'allauth.account',
-    'allauth.socialaccount',
-    #'allauth.socialaccount.providers.facebook',
 
     'courses',
     'files',
@@ -149,3 +147,6 @@ LOGIN_REDIRECT_URL = '/courses/'
 ACCOUNT_LOGOUT_REDIRECT_URL ="/courses/"
 
 ES_URL = 'http://127.0.0.1:9200/'
+
+
+FIXTURE_DIRS = ['itscrawling/fixtures']

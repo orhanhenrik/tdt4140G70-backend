@@ -23,9 +23,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^courses/', include('courses.urls')),
     url(r'^accounts/', include('allauth.urls')),
-    #url(r'^login/$', auth_views.login, name='login',
-    #    kwargs={'redirect_authenticated_user': True, 'template_name': 'general/login.html'}),
-    #url(r'^logout/$', auth_views.logout, name='logout'),
     url(r'^files/', include('files.urls')),
     url(r'^search/', include('search.urls'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

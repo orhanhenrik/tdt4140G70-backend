@@ -1,0 +1,6 @@
+- model: auth.User
+  pk: 1
+  fields:
+    username: test
+    password: hello
+    email: test@test.com

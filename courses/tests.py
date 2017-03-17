@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.test import TestCase
 from django.urls import resolve
 from django.urls import reverse
@@ -7,7 +8,7 @@ from courses.views import Courses
 
 
 class CourseTestCase(TestCase):
-    fixtures = ['test_courses.json']
+    fixtures = ['test_users.yaml', 'test_courses.yaml']
 
     def test_course_list(self):
         url = reverse('course-list')
@@ -16,7 +17,14 @@ class CourseTestCase(TestCase):
         self.assertListEqual(list(response.context['object_list']), list(Course.objects.all()))
 
 
+    def test_course_detail_without_auth(self):
+        course = Course.objects.first()
+        url = reverse('course-detail', args=(course.id,))
+        response = self.client.get(url)
+        self.assertRedirects(response, f'{reverse("account_login")}?next={url}')
+
     def test_course_detail(self):
+        self.client.force_login(User.objects.first())
         course = Course.objects.first()
         url = reverse('course-detail', args=(course.id,))
         response = self.client.get(url)
