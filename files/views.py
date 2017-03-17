@@ -87,8 +87,15 @@ class FileUpload(CreateView):
     success_url = reverse_lazy('file-list')
 
     def get_context_data(self, **kwargs):
+        value = self.request.GET.get("upload_more_btn")
+
+        if value:
+            self.dialog_count = int(self.request.GET.get("upload_more_btn"))
+
         context = super(FileUpload, self).get_context_data(**kwargs)
         context["range"] = range(self.dialog_count)
+        context["next_count"] = self.dialog_count + 1
+
         return context
 
 
