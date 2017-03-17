@@ -1,12 +1,19 @@
 {% extends 'general/base.html' %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+{% block content %}
+    <h1>Feed</h1>
+    <ul>
+    {% for course in user.courses_subscribed_to.all %}
+        {% for file in files %}
+            </li>
+                <tr>
+                    <td width="25%">
+                        <a href="{{ file.file.url }}">{{ file.name }}</a>
+                    </td>
+                </tr>
+            </li>
+            {% endfor %}
+    {% endfor %}
+    </ul>
+    <input type="submit" value="Download"/>
+{% endblock content %}

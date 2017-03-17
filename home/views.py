@@ -1,10 +1,21 @@
+from django.contrib.auth import get_user
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
 from django.views.generic import ListView
 from django.http import HttpResponse
+
+from courses.models import Course
 from files.models import File
 from django.db import models
 
-
-class FeedView(ListView):
-    template_name = 'home/feed.html'
-    checked_files_ids = list()
-    queryset = File.objects.all()
+@login_required()
+def feed(request):
+    user = get_user(request)
+    print(user.courses_subscribed_to.all())
+    courses = Course.objects.all()
+    #courses = user.courses_subscribed_to.all()
+    files = File.objects.all()
+    return render(request, 'home/feed.html', {
+        'courses': courses,
+        'files': files
+    })
