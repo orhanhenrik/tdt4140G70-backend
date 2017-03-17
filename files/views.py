@@ -5,6 +5,8 @@ from django.views.generic import CreateView
 from django.views.generic import ListView
 from django.http import HttpResponse
 from files.models import File, Comment
+from django.forms.models import modelform_factory
+from django import forms
 
 from io import BytesIO
 import zipfile
@@ -80,22 +82,27 @@ class FileList(ListView):
 
 class FileUpload(CreateView):
     model = File
-    fields = ['file', 'name', 'course']
     template_name = 'files/upload.html'
-
     success_url = reverse_lazy('file-list')
 
-    # def get_context_data(self, **kwargs):
-    #     # value = self.request.GET.get("upload_more_btn")
-    #
-    #     context = super(FileUpload, self).get_context_data(**kwargs)
-    #
-    #     return context
+    form_class = modelform_factory(File, fields=['file', 'course'],
+                                   widgets={'file': forms.ClearableFileInput(attrs={'multiple': True})})
 
-    def post(self, request, format=None):
-        uploaded_files = request.FILES.getlist('uploadedFiles')
+    def post(self, request, *args, **kwargs):
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        uploaded_files = request.FILES.getlist('file')
 
-        return super(FileUpload, self).post(request, format)
+        if form.is_valid():
+            for tuple_file in uploaded_files:
+                tuple_name = tuple_file.name
+                tuple_course = request.POST.get('course')
+                print(tuple_name)
+                print(tuple_course)
+                # TODO: write to DB
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
 
 
 class CommentView(CreateView):
