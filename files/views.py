@@ -79,24 +79,23 @@ class FileList(ListView):
 
 
 class FileUpload(CreateView):
-    dialog_count = 1
     model = File
     fields = ['file', 'name', 'course']
     template_name = 'files/upload.html'
 
     success_url = reverse_lazy('file-list')
 
-    def get_context_data(self, **kwargs):
-        value = self.request.GET.get("upload_more_btn")
+    # def get_context_data(self, **kwargs):
+    #     # value = self.request.GET.get("upload_more_btn")
+    #
+    #     context = super(FileUpload, self).get_context_data(**kwargs)
+    #
+    #     return context
 
-        if value:
-            self.dialog_count = int(self.request.GET.get("upload_more_btn"))
+    def post(self, request, format=None):
+        uploaded_files = request.FILES.getlist('uploadedFiles')
 
-        context = super(FileUpload, self).get_context_data(**kwargs)
-        context["range"] = range(self.dialog_count)
-        context["next_count"] = self.dialog_count + 1
-
-        return context
+        return super(FileUpload, self).post(request, format)
 
 
 class CommentView(CreateView):
