@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 
@@ -12,9 +13,6 @@ def search(request):
     query = request.GET.get('query')
     if query:
         try:
-            SearchLog.objects.create(
-                search_term=query
-            )
             res = elasticsearch.search(query)
             duration = res['took']
             hits = res['hits']['hits']
@@ -35,6 +33,12 @@ def search(request):
                     hit['highlight']['attachment.content']
                 ))
 
+            SearchLog.objects.create(
+                search_term=query,
+                user=get_user(request),
+                number_of_results=len(results)
+            )
+
             error = None
         except Exception as e:
             print(e)
@@ -50,4 +54,12 @@ def search(request):
         'error': error,
         'duration': duration,
         'query': query
+    })
+
+
+@login_required()
+def searchLogs(request):
+    logs = SearchLog.objects.order_by('-timestamp').all()
+    return render(request, 'search/searchLog.html', {
+        'logs': logs
     })
