@@ -25,8 +25,7 @@ SECRET_KEY = '13^3u7zk$x+okoylx2vgi685&mlz5_%fe#%-6rtr@bu!p(8d*g'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['46.101.36.123']
 
 # Application definition
 
@@ -148,6 +147,5 @@ LOGIN_REDIRECT_URL = '/courses/'
 ACCOUNT_LOGOUT_REDIRECT_URL ="/courses/"
 
 ES_URL = 'http://127.0.0.1:9200/'
-
 
 FIXTURE_DIRS = ['itscrawling/fixtures']
