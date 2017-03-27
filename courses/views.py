@@ -2,7 +2,9 @@
 from django.urls import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.urls import reverse_lazy
 from django.views.generic import CreateView
+from django.views.generic import DeleteView
 from django.views.generic import DetailView
 from django.views.generic import ListView
 from django.views.generic import UpdateView
@@ -34,3 +36,8 @@ class UpdateCourse(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         return reverse('course-detail', args=(self.object.id,))
 
+class DeleteCourse(PermissionRequiredMixin, DeleteView):
+    permission_required = 'courses.delete_course'
+    model = Course
+    raise_exception = True
+    success_url = reverse_lazy('course-list')
