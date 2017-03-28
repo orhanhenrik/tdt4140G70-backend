@@ -16,6 +16,7 @@
                 <ul class="nav navbar-nav">
                     <li><a href="{% url 'course-list' %}">Courses</a></li>
                     <li><a href="{% url 'file-list' %}">Files</a></li>
+                    <li><a href="{% url 'search' %}">Search</a></li>
                     {% if user.is_authenticated %}
                     <li><a href="{% url 'account_logout' %}">Logout {{ user.get_username }}</a></li>
                     {% else %}
