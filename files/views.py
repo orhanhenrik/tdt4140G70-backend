@@ -4,6 +4,7 @@ from django.http import Http404
 from django.urls import reverse
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
+from django.views.generic import DeleteView
 from django.views.generic import ListView
 from django.http import HttpResponse
 from files.models import File, Comment
@@ -87,6 +88,12 @@ class FileUpload(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
     fields = ['file', 'name', 'course']
     template_name = 'files/upload.html'
 
+    success_url = reverse_lazy('file-list')
+
+class FileDeleteView(PermissionRequiredMixin, DeleteView):
+    permission_required = 'files.delete_file'
+    raise_exception = True
+    model = File
     success_url = reverse_lazy('file-list')
 
 class CommentView(LoginRequiredMixin, CreateView):
