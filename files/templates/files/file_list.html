@@ -6,24 +6,39 @@
     <input type="checkbox" id="select-all" onClick="c=document.getElementsByName('checks');for(i=0;i<c.length;i++){c[i].checked=this.checked}"/>
     <label for="select-all" style="font-weight: normal">Select all</label><br/>
 
+    <ul class="list-group">
     {% for file in files %}
-        <hr/>
-        <span style="display:block;">
-            <h4 style="margin: 0">
+        <li class="list-group-item clearfix">
+            <div class="list-group-item-heading">
                 <input type="checkbox" name="checks" value="{{ file.id }}" id="check-{{ file.id }}" />
                 <label for="check-{{ file.id }}">
                     {{ file.name }}
-                    {% if include_course_name %}
-                        ({{ file.course.name }})
-                    {% endif %}
                 </label>
-                <a href="{{ file.file.url }}">
-                    <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
-                </a>
-            </h4>
-            <em>Uploaded: {{ file.created_at }}</em><br/>
-            <a href="{% url 'comment' file.id %}">{{ file.comments.count }} user comments</a>
-        </span>
+                <span>
+                    <span class="badge">{{ file.extension }}</span>
+                </span>
+                {% if include_course_name %}
+                    (<a href="{% url 'course-detail' file.course.id %}">{{ file.course.name }}</a>)
+                {% endif %}
+                &nbsp;
+                <a href="{% url 'comment' file.id %}">{{ file.comments.count }} user comments</a>
+                <span class="pull-right">Uploaded at: {{ file.created_at }}
+                    <a href="{{ file.file.url }}">
+                        <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
+                    </a>
+                </span>
+            </div>
+            {% if all_highlights %}
+                <div class="list-group-item-text" style="background-color: #eee">
+                    {% with all_highlights|get_item:file as highlights %}
+                        {% for highlight in highlights %}
+                            {{ highlight | safe }}<br/><br/>
+                        {% endfor %}
+                    {% endwith %}
+                </div>
+            {% endif %}
+        </li>
 
     {% endfor %}
+    </ul>
 </form>

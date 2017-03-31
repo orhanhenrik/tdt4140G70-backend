@@ -12,18 +12,10 @@
     {% if error %}
         Error! <br/>{{ error }}
     {% endif %}
-    {% if results %}
-        search took {{ duration }} ms<br/>
-        {% for file, highlights in results %}
-            <div style="border:1px solid black;padding:10px">
-                <h4>
-                    <a href="{{ file.file.url }}">{{ file.name }}</a> -
-                    <a href="{% url 'comment' file.pk %}">{{ file.comments.count }} comments</a><br/>
-                </h4>
-                {% for highlight in highlights %}
-                    {{ highlight | safe }}<br/><br/>
-                {% endfor %}
-            </div>
-        {% endfor %}
+    {% if files %}
+        {% with True as include_course_name %}
+            search took {{ duration }} ms<br/>
+            {% include 'files/file_list.html' %}
+        {% endwith %}
     {% endif %}
 {% endblock content %}

@@ -21,6 +21,9 @@ class File(models.Model):
     course = models.ForeignKey('courses.Course', related_name='files')
     created_at = models.DateTimeField(null=False, default=timezone.now)
 
+    def extension(self):
+        return self.filename().split('.')[-1]
+
     def filename(self):
         return os.path.basename(self.file.name)
 
