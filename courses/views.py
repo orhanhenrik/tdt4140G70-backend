@@ -49,8 +49,22 @@ class DeleteCourse(PermissionRequiredMixin, DeleteView):
 
 @login_required()
 def subscribe_courses(request):
-    course_ids = request.POST.getlist('checks[]')
-    user = get_user(request)
+    action = request.POST.get('action')
+    subscribe = True
+    if action.startswith('subscribe'):
+        course_ids = [action.replace('subscribe-','')]
+    elif action.startswith('unsubscribe'):
+        subscribe = False
+        course_ids = [action.replace('unsubscribe-', '')]
+    else:
+        course_ids = request.POST.getlist('checks')
+        if 'unsubscribe' in action:
+            subscribe = False
+
+
     course_ids = list(map(int,course_ids))
-    user.courses_subscribed_to.add(*course_ids)
-    return HttpResponseRedirect(reverse('feed'))
+    if subscribe:
+        request.user.courses_subscribed_to.add(*course_ids)
+    else:
+        request.user.courses_subscribed_to.remove(*course_ids)
+    return HttpResponseRedirect(reverse('course-list'))

@@ -36,7 +36,6 @@ class FileList(LoginRequiredMixin, ListView):
             all_types.add(type)
         context["filetype"] = self.request.GET.get("filetype_choice")
         context["file_types_list"] = all_types
-
         return context
 
     def get_queryset(self):
@@ -45,10 +44,10 @@ class FileList(LoginRequiredMixin, ListView):
             queryset = File.objects.all()
         else:
             queryset = File.objects.all().filter(file__endswith=filetype)
-        return queryset
+        return queryset.order_by('-created_at')
 
     def get(self, request, *args, **kwargs):
-        self.checked_files_ids = self.request.GET.getlist('checks[]')
+        self.checked_files_ids = self.request.GET.getlist('checks')
 
         if self.checked_files_ids:
 

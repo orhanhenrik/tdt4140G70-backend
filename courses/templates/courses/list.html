@@ -1,24 +1,49 @@
 {% extends 'general/base.html' %}
 
 {% block content %}
-    <h1>List courses</h1>
+    <h1>Courses</h1>
     {% if perms.courses.add_course %}
       <a href="{% url 'course-create' %}">Create course</a>
     {% endif %}
     <form method="post" action="{% url "course-subscribe" %}">
     {% csrf_token %}
-    <ul>
+    <div style="padding:10px">
+        <button type="submit" class="btn btn-primary" name="action" value="multi-subscribe">
+            Subscribe to selected courses
+        </button>
+        <button type="submit" class="btn btn-info" name="action" value="multi-unsubscribe">
+            Unsubscribe to selected courses
+        </button>
+        <br/>
+        <input type="checkbox" id="select-all" onClick="c=document.getElementsByName('checks');for(i=0;i<c.length;i++){c[i].checked=this.checked}"/>
+        <label for="select-all">Select all</label>
+    </div>
     {% for course in object_list %}
-        <li>
-        <td width="50%" align="center">
-            <input type="checkbox" name="checks[]" value="{{ course.id }}"/>
-        </td>
-            <td>
-            <a href="{% url 'course-detail' course.id %}"> {{ course.name }} ({{ course.files.count }} files)</a>
-        </td>
-        </li>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <input type="checkbox" name="checks" value="{{ course.id }}" id="check-{{ course.id }}"/>
+                    <label for="check-{{ course.id }}">{{ course.name }}</label>
+                </h3>
+            </div>
+            <div class="panel-body">
+                <em><a href="{% url 'course-detail' course.id %}">{{ course.files.count }} files</em></a><br/>
+                {{ course.description }}
+                <br/>
+
+            </div>
+            <div class="panel-footer">
+                {% if course not in user.courses_subscribed_to.all %}
+                    <button type="submit" class="btn btn-sm btn-primary" name="action" value="subscribe-{{ course.id }}">
+                        Subscribe
+                    </button>
+                {% else %}
+                    <button type="submit" class="btn btn-sm btn-info" name="action" value="unsubscribe-{{ course.id }}">
+                        Unsubscribe
+                    </button>
+                {% endif %}
+            </div>
+        </div>
     {% endfor %}
-    </ul>
-    <input type="submit" value="Subscribe"/>
     </form>
 {% endblock content %}

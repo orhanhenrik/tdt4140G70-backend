@@ -1,9 +1,14 @@
 {% extends 'general/base.html' %}
 
 {% block content %}
-    <h1>List files</h1>
+    <h1>Files
+    {% if perms.files.add_file %}
+        <a class="btn btn-primary btn-sm" href="{% url 'file-upload' %}">Upload new file</a>
+    {% endif %}
+    </h1>
 
     <form method="get">
+        File type:
         <select name="filetype_choice" onchange="this.form.submit()">
             <option>All</option> <!-- all types -->
             {% for type in file_types_list %}
@@ -11,30 +16,10 @@
             {% endfor %}
         </select>
     </form>
-
-    <form method="get" action="">
-        <table>
-
-          {% if perms.files.add_file %}
-            <th colspan="2">
-                <a href="{% url 'file-upload' %}">UPLOAD</a>
-            </th>
-          {% endif %}
-            {% for file in object_list %}
-                <tr>
-                    <td width="50%" align="center">
-                        <input type="checkbox" name="checks[]" value="{{ file.id }}"/>
-                    </td>
-                    <td width="25%">
-                        <a href="{{ file.file.url }}">{{ file.name }}</a>
-                    </td>
-                    <td width="25%">
-                        <a href="{% url 'comment' file.id %}">{{ file.comments.count }} comments</a>
-                    </td>
-                </tr>
-            {% endfor %}
-        </table>
-        <input type="submit" value="Download"/>
-    </form>
+    {% with object_list as files %}
+        {% with True as include_course_name %}
+            {% include 'files/file_list.html' %}
+        {% endwith %}
+    {% endwith %}
 
 {% endblock content %}

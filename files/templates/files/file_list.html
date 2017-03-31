@@ -1,0 +1,29 @@
+<form method="get" action="{% url 'file-list' %}">
+    <button type="submit" class="btn btn-sm btn-primary">
+        <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Download selected
+    </button>
+    <br/>
+    <input type="checkbox" id="select-all" onClick="c=document.getElementsByName('checks');for(i=0;i<c.length;i++){c[i].checked=this.checked}"/>
+    <label for="select-all" style="font-weight: normal">Select all</label><br/>
+
+    {% for file in files %}
+        <hr/>
+        <span style="display:block;">
+            <h4 style="margin: 0">
+                <input type="checkbox" name="checks" value="{{ file.id }}" id="check-{{ file.id }}" />
+                <label for="check-{{ file.id }}">
+                    {{ file.name }}
+                    {% if include_course_name %}
+                        ({{ file.course.name }})
+                    {% endif %}
+                </label>
+                <a href="{{ file.file.url }}">
+                    <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
+                </a>
+            </h4>
+            <em>Uploaded: {{ file.created_at }}</em><br/>
+            <a href="{% url 'comment' file.id %}">{{ file.comments.count }} user comments</a>
+        </span>
+
+    {% endfor %}
+</form>
