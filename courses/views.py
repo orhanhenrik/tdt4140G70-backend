@@ -1,4 +1,5 @@
 # Create your views here.
+from django.shortcuts import render
 from django.urls import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import PermissionRequiredMixin
@@ -8,6 +9,10 @@ from django.views.generic import DeleteView
 from django.views.generic import DetailView
 from django.views.generic import ListView
 from django.views.generic import UpdateView
+from django.http import HttpResponseRedirect
+from django.contrib.auth import get_user
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
 
 from courses.models import Course
 
@@ -41,3 +46,13 @@ class DeleteCourse(PermissionRequiredMixin, DeleteView):
     model = Course
     raise_exception = True
     success_url = reverse_lazy('course-list')
+
+@login_required()
+def subscribe_courses(request):
+    course_ids = request.POST.getlist('checks[]')
+    user = get_user(request)
+    course_ids = list(map(int,course_ids))
+    user.courses_subscribed_to.add(*course_ids)
+
+    return render(request, 'courses/list.html', {'objects':Course.objects.all()})
+    #return HttpResponseRedirect('/home/')

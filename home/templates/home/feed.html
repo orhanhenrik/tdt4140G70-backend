@@ -8,12 +8,13 @@
             </li>
                 <tr>
                     <td width="25%">
-                        <a href="{{ file.file.url }}">{{ file.name }}</a>
+                        <li>
+                        <a href="{{ file.file.url }}">{{ file.name }}</a> - {{ course }}
+                        </li>
                     </td>
                 </tr>
             </li>
             {% endfor %}
     {% endfor %}
-    </ul>
-    <input type="submit" value="Download"/>
 {% endblock content %}
+    </ul>

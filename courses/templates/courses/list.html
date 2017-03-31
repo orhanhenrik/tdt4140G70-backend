@@ -5,11 +5,13 @@
     {% if perms.courses.add_course %}
       <a href="{% url 'course-create' %}">Create course</a>
     {% endif %}
+    <form method="post" action="{% url "course-subscribe" %}">
+    {% csrf_token %}
     <ul>
     {% for course in object_list %}
         <li>
         <td width="50%" align="center">
-            <input type="checkbox" name="checks[]" value="{{ file.id }}"/>
+            <input type="checkbox" name="checks[]" value="{{ course.id }}"/>
         </td>
             <td>
             <a href="{% url 'course-detail' course.id %}"> {{ course.name }} ({{ course.files.count }} files)</a>
@@ -18,4 +20,5 @@
     {% endfor %}
     </ul>
     <input type="submit" value="Subscribe"/>
+    </form>
 {% endblock content %}
