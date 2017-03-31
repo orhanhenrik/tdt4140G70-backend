@@ -6,8 +6,13 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from django.views.generic import DeleteView
 from django.views.generic import ListView
+from django.views.generic import FormView
 from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 from files.models import File, Comment
+from courses.models import Course
+from django.forms.models import modelform_factory
+from django import forms
 
 
 from io import BytesIO
@@ -82,13 +87,34 @@ class FileList(LoginRequiredMixin, ListView):
         return super(FileList, self).get(request, *args, **kwargs)
 
 
-class FileUpload(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
+class FileUpload(PermissionRequiredMixin, LoginRequiredMixin, FormView):
     permission_required = 'files.add_file'
     model = File
-    fields = ['file', 'name', 'course']
     template_name = 'files/upload.html'
-
     success_url = reverse_lazy('file-list')
+
+    form_class = modelform_factory(File, fields=['file', 'course'],
+                                   widgets={'file': forms.ClearableFileInput(attrs={'multiple': True})})
+
+    def post(self, request, *args, **kwargs):
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        uploaded_files = request.FILES.getlist('file')
+
+        if form.is_valid():
+            course_id = request.POST.get('course')
+            tuple_course = Course.objects.get(id=course_id)
+
+            for tuple_file in uploaded_files:
+                tuple_name = tuple_file.name
+                f = File(name=tuple_name, file=tuple_file, course=tuple_course)
+                f.save()
+
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+
 
 class FileDeleteView(PermissionRequiredMixin, DeleteView):
     permission_required = 'files.delete_file'
