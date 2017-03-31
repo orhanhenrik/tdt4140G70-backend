@@ -3,7 +3,9 @@ from django.urls import reverse
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from django.views.generic import ListView
+from django.views.generic import FormView
 from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 from files.models import File, Comment
 from courses.models import Course
 from django.forms.models import modelform_factory
@@ -81,7 +83,7 @@ class FileList(ListView):
         return super(FileList, self).get(request, format)
 
 
-class FileUpload(CreateView):
+class FileUpload(FormView):
     model = File
     template_name = 'files/upload.html'
     success_url = reverse_lazy('file-list')
@@ -95,32 +97,18 @@ class FileUpload(CreateView):
         uploaded_files = request.FILES.getlist('file')
 
         if form.is_valid():
-            # -------------------------------------------------------------------------
-            # Alternative 1:
-            file = form.save()
-            file_form = form_class(request.POST, instance=file)
-            if file_form.is_valid():
-                form_class.save()   # error here
-
-            # -------------------------------------------------------------------------
-            # Alternative 2:
             course_id = request.POST.get('course')
             tuple_course = Course.objects.get(id=course_id)
 
             for tuple_file in uploaded_files:
                 tuple_name = tuple_file.name
                 f = File(name=tuple_name, file=tuple_file, course=tuple_course)
-                print("-------------yoyoyo------------")
-                print(f.name)
-                print(f.file)
-                print(f.course)
-                print(f.id)
-                f.save(*args, **kwargs)    # error here
-            # -------------------------------------------------------------------------
+                f.save()
 
             return self.form_valid(form)
         else:
             return self.form_invalid(form)
+
 
 
 class CommentView(CreateView):

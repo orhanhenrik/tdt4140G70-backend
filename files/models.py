@@ -34,7 +34,7 @@ class FileDownloadLog(models.Model):
     file = models.ForeignKey('files.File', related_name = 'downloads')
     timestamp = models.DateTimeField(default = now, null = False)
 
-    
+
 @receiver(post_save, sender=File)
 def post_save_file(sender, instance, **kwargs):
     print(instance, kwargs)
