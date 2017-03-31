@@ -49,6 +49,10 @@ def search(request):
         results = []
         error = None
         duration = 0
+
+    if len(results) == 0 and duration > 0:
+        error = "No results found"
+
     return render(request, 'search/results.html', {
         'results': results,
         'error': error,

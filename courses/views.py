@@ -53,6 +53,4 @@ def subscribe_courses(request):
     user = get_user(request)
     course_ids = list(map(int,course_ids))
     user.courses_subscribed_to.add(*course_ids)
-
-    return render(request, 'courses/list.html', {'objects':Course.objects.all()})
-    #return HttpResponseRedirect('/home/')
+    return HttpResponseRedirect(reverse('feed'))

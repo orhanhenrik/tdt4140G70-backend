@@ -6,6 +6,7 @@ from django.db import models
 import os
 
 # Create your models here.
+from django.utils import timezone
 from django.utils.timezone import now
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -18,6 +19,7 @@ class File(models.Model):
     name = models.CharField(max_length=100, null=False)
     file = models.FileField(upload_to='files/', null=False)
     course = models.ForeignKey('courses.Course', related_name='files')
+    created_at = models.DateTimeField(null=False, default=timezone.now)
 
     def filename(self):
         return os.path.basename(self.file.name)

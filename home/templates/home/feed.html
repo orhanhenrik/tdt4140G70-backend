@@ -1,20 +1,14 @@
 {% extends 'general/base.html' %}
 
 {% block content %}
-    <h1>Feed</h1>
-    <ul>
-    {% for course in user.courses_subscribed_to.all %}
+    <h1>Recently uploaded</h1>
+    <table>
         {% for file in files %}
-            </li>
-                <tr>
-                    <td width="25%">
-                        <li>
-                        <a href="{{ file.file.url }}">{{ file.name }}</a> - {{ course }}
-                        </li>
-                    </td>
-                </tr>
-            </li>
-            {% endfor %}
-    {% endfor %}
+            <tr>
+                <td width="25%">
+                    <a href="{{ file.file.url }}">{{ file.name }}</a> - Course: {{ file.course }} - {{ file.created_at }}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
 {% endblock content %}
-    </ul>

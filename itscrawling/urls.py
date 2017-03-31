@@ -25,5 +25,5 @@ urlpatterns = [
     url(r'^accounts/', include('allauth.urls')),
     url(r'^files/', include('files.urls')),
     url(r'^search/', include('search.urls')),
-    url(r'^home/', include('home.urls'))
+    url(r'^', include('home.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
