@@ -1,0 +1,5 @@
+- model: courses.Course
+  pk: 1
+  fields:
+    name: welcome course
+    description: cool course

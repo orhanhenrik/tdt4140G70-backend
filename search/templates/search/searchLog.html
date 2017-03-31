@@ -1,0 +1,9 @@
+{% extends 'general/base.html' %}
+
+{% block content %}
+    <h1>Search logs</h1>
+
+    {% for log in logs %}
+        "{{ log.search_term }}" ({{ log.number_of_results }} results)<br/>
+    {% endfor %}
+{% endblock content %}

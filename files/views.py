@@ -1,7 +1,10 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.http import Http404
 from django.urls import reverse
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
+from django.views.generic import DeleteView
 from django.views.generic import ListView
 from django.views.generic import FormView
 from django.http import HttpResponse
@@ -11,12 +14,13 @@ from courses.models import Course
 from django.forms.models import modelform_factory
 from django import forms
 
+
 from io import BytesIO
 import zipfile
 import os
 
 
-class FileList(ListView):
+class FileList(LoginRequiredMixin, ListView):
     # permission_classes = (permissions.AllowAny,)
     queryset = File.objects.all()
     template_name = 'files/list.html'
@@ -43,7 +47,7 @@ class FileList(ListView):
             queryset = File.objects.all().filter(file__endswith=filetype)
         return queryset
 
-    def get(self, request, format=None):
+    def get(self, request, *args, **kwargs):
         self.checked_files_ids = self.request.GET.getlist('checks[]')
 
         if self.checked_files_ids:
@@ -80,10 +84,11 @@ class FileList(ListView):
 
             return resp
 
-        return super(FileList, self).get(request, format)
+        return super(FileList, self).get(request, *args, **kwargs)
 
 
-class FileUpload(FormView):
+class FileUpload(PermissionRequiredMixin, LoginRequiredMixin, FormView):
+    permission_required = 'files.add_file'
     model = File
     template_name = 'files/upload.html'
     success_url = reverse_lazy('file-list')
@@ -111,7 +116,13 @@ class FileUpload(FormView):
 
 
 
-class CommentView(CreateView):
+class FileDeleteView(PermissionRequiredMixin, DeleteView):
+    permission_required = 'files.delete_file'
+    raise_exception = True
+    model = File
+    success_url = reverse_lazy('file-list')
+
+class CommentView(LoginRequiredMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super(CommentView, self).get_context_data(**kwargs)
         try:
