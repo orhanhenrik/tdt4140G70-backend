@@ -21,7 +21,6 @@ import os
 
 
 class FileList(LoginRequiredMixin, ListView):
-    # permission_classes = (permissions.AllowAny,)
     queryset = File.objects.all()
     template_name = 'files/list.html'
     checked_files_ids = list()
@@ -88,6 +87,7 @@ class FileList(LoginRequiredMixin, ListView):
 
 class FileUpload(PermissionRequiredMixin, LoginRequiredMixin, FormView):
     permission_required = 'files.add_file'
+    raise_exception = True
     model = File
     template_name = 'files/upload.html'
     success_url = reverse_lazy('file-list')

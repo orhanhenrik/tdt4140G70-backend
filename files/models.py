@@ -46,6 +46,5 @@ class FileDownloadLog(models.Model):
 
 @receiver(post_save, sender=File)
 def post_save_file(sender, instance, **kwargs):
-    print(instance, kwargs)
     data = instance.file.read()
     elasticsearch.add_to_index(instance.id, str(instance.file), data)

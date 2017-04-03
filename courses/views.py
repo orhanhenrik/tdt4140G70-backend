@@ -46,6 +46,7 @@ class ViewCourse(LoginRequiredMixin, DetailView):
 
 class CreateCourse(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
     permission_required = 'courses.add_course'
+    raise_exception = True
     model = Course
     fields = ['name', 'description']
     template_name = 'courses/new.html'
@@ -55,6 +56,7 @@ class CreateCourse(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
 
 class UpdateCourse(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
     permission_required = 'courses.change_course'
+    raise_exception = True
     model = Course
     fields = ['name', 'description']
     template_name = 'courses/edit.html'
@@ -64,8 +66,8 @@ class UpdateCourse(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
 
 class DeleteCourse(PermissionRequiredMixin, DeleteView):
     permission_required = 'courses.delete_course'
-    model = Course
     raise_exception = True
+    model = Course
     success_url = reverse_lazy('course-list')
 
 @login_required()
