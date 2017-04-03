@@ -44,7 +44,7 @@
                     </button>
                 {% endif %}
                 {% if perms.files.create_file %}
-                    <a class="btn btn-sm btn-primary" href="{% url 'file-upload' %}?course={{ object.id }}">Upload files</a>
+                    <a class="btn btn-sm btn-primary" href="{% url 'file-upload' %}?course={{ course.id }}">Upload files</a>
                 {% endif %}
                 {% if perms.courses.change_course %}
                     <a class="btn btn-sm btn-success" href="{% url 'course-edit' course.id %}">Edit course</a>
