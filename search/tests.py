@@ -28,7 +28,7 @@ class CourseTestCase(TestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         self.assertIsNone(response.context['error'])
-        self.assertEqual(len(response.context['results']), 0)
+        self.assertEqual(len(response.context['files']), 0)
 
     @mock.patch('search.elasticsearch.Elasticsearch.search')
     @mock.patch('search.elasticsearch.Elasticsearch.add_to_index')
@@ -66,6 +66,6 @@ class CourseTestCase(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertIsNone(response.context['error'])
-        self.assertEqual(len(response.context['results']), 1)
-        self.assertEqual(response.context['results'][0][0], file)
-        self.assertListEqual(response.context['results'][0][1], highlights)
+        self.assertEqual(len(response.context['files']), 1)
+        self.assertEqual(response.context['files'][0], file)
+        self.assertListEqual(response.context['all_highlights'][file], highlights)
