@@ -2,10 +2,11 @@
 
 {% block content %}
     <h1>Edit course</h1>
-    <a href="{% url 'course-list' %}">Back</a>
     <form method="POST" class="post-form">
         {% csrf_token %}
-        {{ form.as_p }}
+        <table class="django-form">
+            {{ form.as_table }}
+        </table>
         <button type="submit" class="save btn btn-primary">Save</button>
     </form>
 {% endblock %}

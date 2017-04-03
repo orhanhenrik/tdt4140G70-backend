@@ -3,11 +3,11 @@
 {% block content %}
     <h1>Search results</h1>
 
-    <form method="GET">
-        <input type="text" name="query" placeholder="search"
+    <form method="GET" class="form-inline">
+        <input class="form-control" type="text" name="query" placeholder="search"
                 {% if query %} value="{{ query }}" {% endif %}
         />
-        <input type="submit" value="Søk" />
+        <input type="submit" class="btn btn-default" value="Søk" />
     </form>
     {% if error %}
         Error! <br/>{{ error }}

@@ -2,6 +2,7 @@ import base64
 import json
 
 from django.conf import settings
+from django.contrib.auth.models import User
 from django.db import models
 import os
 
@@ -32,6 +33,7 @@ class Comment(models.Model):
     file = models.ForeignKey('files.File', related_name='comments')
     text = models.TextField()
     created_at = models.DateTimeField(default=now, null=False)
+    created_by = models.ForeignKey(User, null=False)
 
     def __str__(self):
         return self.text

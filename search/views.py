@@ -18,6 +18,7 @@ def search(request):
     if query:
         try:
             res = elasticsearch.search(query)
+            print(res)
             duration = res['took']
             hits = res['hits']['hits']
             file_ids = list(map(lambda r: int(r['_id']), hits))
@@ -42,7 +43,7 @@ def search(request):
 
             error = None
         except Exception as e:
-            print(e)
+            print('exception', e)
             all_highlights = {}
             files = []
             error = 'Search failed'

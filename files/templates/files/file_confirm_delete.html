@@ -4,6 +4,6 @@
     <h1>Delete file {{ file.name }}</h1>
     <form method="POST" action="{% url "file-delete" file.id %}">
     Are you sure?
-       {% csrf_token %}<input type="submit" value="Confirm delete">
+       {% csrf_token %}<input class="btn btn-danger" type="submit" value="Confirm delete">
     </form>
 {% endblock %}

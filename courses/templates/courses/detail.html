@@ -2,15 +2,25 @@
 
 {% block content %}
     <h1>{{ object.name }}</h1>
+    {% if perms.files.create_file %}
+        <a class="btn btn-sm btn-primary" href="{% url 'file-upload' %}?course={{ object.id }}">Upload files</a>
+    {% endif %}
     {% if perms.courses.change_course %}
-        <a class="btn btn-sm btn-success" href="{% url 'course-edit' object.id %}">Edit</a>
+        <a class="btn btn-sm btn-success" href="{% url 'course-edit' object.id %}">Edit course</a>
     {% endif %}
     {% if perms.courses.delete_course %}
         <a class="btn btn-sm btn-danger" href="{% url 'course-delete' course.id %}">Delete course</a>
     {% endif %}
-    <p>{{ object.description }}</p>
+    <p><em>Description: </em>{{ object.description }}</p>
     <h3>Files:</h3>
-    {% with object.files.all as files %}
-        {% include 'files/file_list.html' %}
-    {% endwith %}
+    <form method="get">
+        File type:
+        <select name="filetype_choice" onchange="this.form.submit()">
+            <option>All</option> <!-- all types -->
+            {% for type in file_types_list %}
+                <option value="{{ type }}" {% if type == filetype %} selected="true" {% endif %}>{{ type }}</option>
+            {% endfor %}
+        </select>
+    </form>
+    {% include 'files/file_list.html' %}
 {% endblock %}

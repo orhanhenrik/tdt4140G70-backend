@@ -4,6 +4,6 @@
     <h1>Delete course {{ course.name }}</h1>
     <form method="POST" action="{% url "course-delete" course.id %}">
     Are you sure?
-       {% csrf_token %}<input type="submit" value="Confirm delete">
+       {% csrf_token %}<input type="submit" class="btn btn-danger" value="Confirm delete">
     </form>
 {% endblock %}

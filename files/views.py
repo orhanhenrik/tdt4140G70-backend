@@ -32,7 +32,7 @@ class FileList(LoginRequiredMixin, ListView):
         all_types = set()
         for file in all_files:
             name = file.filename()
-            type = name[(name.index('.') + 1):]
+            type = name.split('.')[-1]
             all_types.add(type)
         context["filetype"] = self.request.GET.get("filetype_choice")
         context["file_types_list"] = all_types
@@ -95,6 +95,11 @@ class FileUpload(PermissionRequiredMixin, LoginRequiredMixin, FormView):
     form_class = modelform_factory(File, fields=['file', 'course'],
                                    widgets={'file': forms.ClearableFileInput(attrs={'multiple': True})})
 
+    def get_form_kwargs(self):
+        kwargs = super(FileUpload, self).get_form_kwargs()
+        kwargs['initial']['course'] = self.request.GET.get('course')
+        return kwargs
+
     def post(self, request, *args, **kwargs):
         form_class = self.get_form_class()
         form = self.get_form(form_class)
@@ -132,10 +137,12 @@ class CommentView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.file_id = self.kwargs['pk']
+        form.instance.created_by = self.request.user
         return super(CommentView, self).form_valid(form)
 
     model = Comment
     fields = ['text']
     template_name = 'files/comment.html'
+
     def get_success_url(self):
         return reverse('comment', kwargs=self.kwargs)

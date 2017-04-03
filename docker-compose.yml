@@ -4,6 +4,7 @@ services:
   elasticsearch:
     image: 'ragnarok56/elasticsearch-ingest-attachment'
     environment:
-      - "ES_JAVA_OPTS=-Xms256m -Xmx512m"
+      - "ES_JAVA_OPTS=-Xms256m -Xmx256m"
+      - "bootstrap.ignore_system_bootstrap_checks=true"
     ports:
      - '127.0.0.1:9200:9200'

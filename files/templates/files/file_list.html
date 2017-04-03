@@ -26,6 +26,9 @@
                     <a href="{{ file.file.url }}">
                         <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
                     </a>
+                    <a href="{% url 'comment' file.id %}">
+                        <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
+                    </a>
                 </span>
             </div>
             {% if all_highlights %}

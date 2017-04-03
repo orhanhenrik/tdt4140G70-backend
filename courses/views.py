@@ -25,11 +25,31 @@ class ViewCourse(LoginRequiredMixin, DetailView):
     queryset = Course.objects.all()
     template_name = 'courses/detail.html'
 
+    def get_context_data(self, **kwargs):
+        context = super(ViewCourse, self).get_context_data(**kwargs)
+        all_files = context['object'].files.all()
+        all_types = set()
+        for file in all_files:
+            name = file.filename()
+            type = name.split('.')[-1]
+            all_types.add(type)
+        filetype = self.request.GET.get("filetype_choice")
+        context["filetype"] = filetype
+        context["file_types_list"] = all_types
+
+        if filetype == "All" or filetype is None:
+            context["files"] = all_files
+        else:
+            context["files"] = all_files.filter(file__endswith=filetype)
+
+        return context
+
 class CreateCourse(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
     permission_required = 'courses.add_course'
     model = Course
     fields = ['name', 'description']
     template_name = 'courses/new.html'
+
     def get_success_url(self):
         return reverse('course-detail', args=(self.object.id,))
 
@@ -38,6 +58,7 @@ class UpdateCourse(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
     model = Course
     fields = ['name', 'description']
     template_name = 'courses/edit.html'
+
     def get_success_url(self):
         return reverse('course-detail', args=(self.object.id,))
 
@@ -60,7 +81,6 @@ def subscribe_courses(request):
         course_ids = request.POST.getlist('checks')
         if 'unsubscribe' in action:
             subscribe = False
-
 
     course_ids = list(map(int,course_ids))
     if subscribe:

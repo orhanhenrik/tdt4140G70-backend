@@ -1,24 +1,30 @@
 {% extends 'general/base.html' %}
 
 {% block content %}
-    File:<br/>
-    id: {{ file.id }} - name: {{ file.name }}<br/>
-    Number of file downloads: {{ file.downloads.count }}<br/>
+    <h1>File {{ file.name }}</h1>
+    Total number of downloads: {{ file.downloads.count }}<br/>
     {% if perms.files.delete_file %}
-        <a href="{% url 'file-delete' file.id %}">Delete file</a>
+        <a class="btn btn-danger" href="{% url 'file-delete' file.id %}">Delete file</a>
     {% endif %}
-    <h1>Add comment</h1>
-    <form method="POST" class="post-form">{% csrf_token %}
+    <h1>Comments</h1>
+    <ul class="list-group">
+        {% for comment in file.comments.all %}
+            <li class="list-group-item clearfix">
+                <b>{{ comment.created_by }} </b>
+                {{ comment.text }}
+                <span class="pull-right">Commented at: {{ comment.created_at }}</span>
+            </li>
+        {% endfor %}
+        {% if file.comments.count == 0 %}
+            No comments yet :(
+        {% endif %}
+    </ul>
+    <h3>Add comment</h3>
+    <form method="POST">
+        {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" class="save btn btn-default">Submit</button>
+        <button type="submit" class="save btn btn-primary">Submit</button>
     </form>
 
-    <h3> Comments on {{ file.name }}</h3>
 
-    <a href="{% url 'file-list' %}">Back</a>
-    <div>
-        {% for comment in file.comments.all %}
-            <span><i>{{ comment.created_at }}</i> <b>{{ comment.text }}</b></span><br/>
-        {% endfor %}
-    </div>
 {% endblock %}
