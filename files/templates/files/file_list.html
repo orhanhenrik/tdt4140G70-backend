@@ -7,21 +7,29 @@
         <input type="checkbox" id="select-all" onClick="c=document.getElementsByName('checks');for(i=0;i<c.length;i++){c[i].checked=this.checked}"/>
         <label for="select-all" style="font-weight: normal">Select all</label><br/>
     {% endif %}
-    <ul class="list-group" style="margin:0px">
+    <table class="table" style="margin-bottom:0">
     {% for file in files %}
-        <li class="list-group-item clearfix">
-            <div class="list-group-item-heading">
+        <tr>
+            <td>
                 <input type="checkbox" name="checks" value="{{ file.id }}" id="check-{{ file.id }}" />
+            </td>
+            <td>
                 <label for="check-{{ file.id }}">
-                    <span class="badge">{{ file.extension }}</span>
                     {{ file.name }}
                 </label>
-
+            </td>
+            <td>
+                <span class="badge">{{ file.extension }}</span>
+            </td>
+            <td>
                 {% if include_course_name %}
                     (<a href="{% url 'course-detail' file.course.id %}">{{ file.course.name }}</a>)
                 {% endif %}
-                &nbsp;
+            </td>
+            <td>&nbsp;
                 <a href="{% url 'comment' file.id %}">{{ file.comments.count }} user comments</a>
+            </td>
+            <td>
                 <span class="pull-right">Uploaded at: {{ file.created_at }}
                     <a href="{{ file.file.url }}">
                         <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
@@ -30,26 +38,17 @@
                         <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
                     </a>
                 </span>
-            </div>
-            {% if all_highlights %}
-                <div class="list-group-item-text" style="background-color: #eee">
-                    {% with all_highlights|get_item:file as highlights %}
-                        {% for highlight in highlights %}
-                            {{ highlight | safe }}<br/><br/>
-                        {% endfor %}
-                    {% endwith %}
-                </div>
-            {% endif %}
-        </li>
+            </td>
+        </tr>
+        {% if all_highlights %}
+            <tr style="background-color: #eee">
+                <td colspan="6">
+                    {% for highlight in all_highlights|get_item:file %}
+                        {{ highlight | safe }}<br/><br/>
+                    {% endfor %}
+                </td>
+            </tr>
+        {% endif %}
     {% endfor %}
-    {% if show_more_url %}
-        <li class="list-group-item clearfix">
-            <div class="list-group-item-body">
-                <a href="{{ show_more_url }}">
-                    Show more
-                </a>
-            </div>
-        </li>
-    {% endif %}
-    </ul>
+    </table>
 </form>

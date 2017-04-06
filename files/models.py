@@ -17,6 +17,9 @@ from django.utils.timezone import now
 
 
 class File(models.Model):
+    class Meta:
+        ordering = ['-created_at',]
+
     name = models.CharField(max_length=100, null=False)
     file = models.FileField(upload_to='files/', null=False)
     course = models.ForeignKey('courses.Course', related_name='files')
