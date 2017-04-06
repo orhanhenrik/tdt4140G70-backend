@@ -2,7 +2,17 @@
 
 {% block content %}
     <h1>Recently uploaded files</h1>
-    {% with True as include_course_name %}
-        {% include 'files/file_list.html' %}
-    {% endwith %}
+    {% for course in courses %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">{{ course.name }}</h3>
+            </div>
+            <div class="panel-body" style="padding:0px">
+            {% with True as feed_view %}
+                {% url 'course-detail' course.id as course_url %}
+                {% include 'files/file_list.html' with files=course.files.all|slice:":2" show_more_url=course_url %}
+            {% endwith %}
+            </div>
+        </div>
+    {% endfor %}
 {% endblock content %}

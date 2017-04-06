@@ -1,22 +1,22 @@
-<form method="get" action="{% url 'file-list' %}">
-    <button type="submit" class="btn btn-sm btn-primary">
-        <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Download selected
-    </button>
-    <br/>
-    <input type="checkbox" id="select-all" onClick="c=document.getElementsByName('checks');for(i=0;i<c.length;i++){c[i].checked=this.checked}"/>
-    <label for="select-all" style="font-weight: normal">Select all</label><br/>
-
-    <ul class="list-group">
+<form method="get" action="{% url 'file-list' %}" style="margin:0px">
+    {% if not feed_view %}
+        <button type="submit" class="btn btn-sm btn-primary">
+            <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Download selected
+        </button>
+        <br/>
+        <input type="checkbox" id="select-all" onClick="c=document.getElementsByName('checks');for(i=0;i<c.length;i++){c[i].checked=this.checked}"/>
+        <label for="select-all" style="font-weight: normal">Select all</label><br/>
+    {% endif %}
+    <ul class="list-group" style="margin:0px">
     {% for file in files %}
         <li class="list-group-item clearfix">
             <div class="list-group-item-heading">
                 <input type="checkbox" name="checks" value="{{ file.id }}" id="check-{{ file.id }}" />
                 <label for="check-{{ file.id }}">
+                    <span class="badge">{{ file.extension }}</span>
                     {{ file.name }}
                 </label>
-                <span>
-                    <span class="badge">{{ file.extension }}</span>
-                </span>
+
                 {% if include_course_name %}
                     (<a href="{% url 'course-detail' file.course.id %}">{{ file.course.name }}</a>)
                 {% endif %}
@@ -41,7 +41,15 @@
                 </div>
             {% endif %}
         </li>
-
     {% endfor %}
+    {% if show_more_url %}
+        <li class="list-group-item clearfix">
+            <div class="list-group-item-body">
+                <a href="{{ show_more_url }}">
+                    Show more
+                </a>
+            </div>
+        </li>
+    {% endif %}
     </ul>
 </form>

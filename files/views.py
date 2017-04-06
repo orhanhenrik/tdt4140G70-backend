@@ -39,10 +39,12 @@ class FileList(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         filetype = self.request.GET.get("filetype_choice")
-        if filetype == "All" or filetype is None:
-            queryset = File.objects.all()
-        else:
-            queryset = File.objects.all().filter(file__endswith=filetype)
+        queryset = File.objects.filter(
+            course__in=self.request.user.courses_subscribed_to.all()
+        )
+        if filetype != "All" and filetype is not None:
+            queryset = queryset.filter(file__endswith=filetype)
+
         return queryset.order_by('-created_at')
 
     def get(self, request, *args, **kwargs):
