@@ -3,3 +3,8 @@
   fields:
     name: welcome course
     description: cool course
+- model: courses.Course
+  pk: 2
+  fields:
+    name: test course
+    description: very coursey

@@ -27,9 +27,10 @@ class Elasticsearch:
                 "data": b64_string.decode('utf-8')
             })
         )
-        print(r)
-        print(r.text)
-        print(r.status_code)
+        return r
+        #print(r)
+        #print(r.text)
+        #print(r.status_code)
 
     def search(self, query, index=None, type=None):
         if index is None:

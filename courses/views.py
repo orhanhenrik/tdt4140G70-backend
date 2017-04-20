@@ -84,7 +84,7 @@ def subscribe_courses(request):
         if 'unsubscribe' in action:
             subscribe = False
 
-    course_ids = list(map(int,course_ids))
+    course_ids = list(map(int, course_ids))
     if subscribe:
         request.user.courses_subscribed_to.add(*course_ids)
     else:

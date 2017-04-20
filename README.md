@@ -30,3 +30,9 @@ python manage.py runserver
 
 deactivate
 ```
+
+## Checking coverage:
+```
+coverage run --source='.' --omit='venv/*,*/wsgi.py,*/apps.py,*/migrations/*,manage.py'  manage.py test
+coverage report
+```

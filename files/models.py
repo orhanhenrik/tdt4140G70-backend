@@ -31,6 +31,8 @@ class File(models.Model):
     def filename(self):
         return os.path.basename(self.file.name)
 
+    def __str__(self):
+        return self.name
 
 class Comment(models.Model):
     file = models.ForeignKey('files.File', related_name='comments')
