@@ -43,3 +43,9 @@ deactivate
 coverage run --source='.' --omit='venv/*,*/wsgi.py,*/apps.py,*/migrations/*,manage.py'  manage.py test
 coverage report
 ```
+
+## Instructions for use of the system
+There are two types of users in the system, professors and students. You should first log in with the professor account, which is the account you created in the `createsuperuser` step of the setup above. This professor can then create a course and some files belonging to this course.  
+After you have done this, you can log in as a student. To create a student account you can use the signup form on the website. A student can perform activities like subscribing to courses, downloading and commenting on files, and searching for files.
+
+
