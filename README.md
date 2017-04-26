@@ -8,6 +8,9 @@
     2. Install elasticsearch 5 with the ingest plugin
 
 3. Run the two first queries of [this file](docs/elasticsearch/test.query) against elasticsearch to configure the index
+
+`curl -X PUT 'http://127.0.0.1:9200/_ingest/pipeline/attachment' -d @test.query`
+
 4. Clone and start the django app:
 
 * Linux:
