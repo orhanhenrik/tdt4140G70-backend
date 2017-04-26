@@ -3,10 +3,9 @@
 ## Project setup:
 
 1. Install python3 in your path
-2. Elasticsearch (use either 2.1 or 2.2)
-
-  2.1 Install docker and docker-compose and run `docker-compose up -d`  
-  2.2 Install elasticsearch 5 with the ingest plugin
+2. Elasticsearch (use either i or ii)
+    1. Install docker and docker-compose and run `docker-compose up -d`  
+    2. Install elasticsearch 5 with the ingest plugin
 
 3. Run the two first queries of [this file](docs/elasticsearch/test.query) against elasticsearch to configure the index
 4. Clone and start the django app:
